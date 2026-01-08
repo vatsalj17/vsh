@@ -1,6 +1,8 @@
 #ifndef PARSER_H
 #define PARSER_H
 
+#include <stdbool.h>
+
 #define VSH_TOK_BUFSIZE 64
 
 char **tokenize_input(char *input);

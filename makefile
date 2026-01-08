@@ -1,7 +1,7 @@
 CC = gcc
-CFLAGS = -lreadline -g
 SRC = src
 INC = include
+CFLAGS = -lreadline -g -I$(INC)
 OBJ = obj
 BIN = vsh
 BINDIR = /usr/local/bin

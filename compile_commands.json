@@ -1,0 +1,100 @@
+[
+  {
+    "file": "src/builtins.c",
+    "arguments": [
+      "gcc",
+      "-g",
+      "-Iinclude",
+      "-c",
+      "src/builtins.c",
+      "-o",
+      "obj/builtins.o"
+    ],
+    "directory": "/home/Vatsal/Codes/C/Projects/Shell/vshell",
+    "output": "obj/builtins.o"
+  },
+  {
+    "file": "src/executor.c",
+    "arguments": [
+      "gcc",
+      "-g",
+      "-Iinclude",
+      "-c",
+      "src/executor.c",
+      "-o",
+      "obj/executor.o"
+    ],
+    "directory": "/home/Vatsal/Codes/C/Projects/Shell/vshell",
+    "output": "obj/executor.o"
+  },
+  {
+    "file": "src/main.c",
+    "arguments": [
+      "gcc",
+      "-g",
+      "-Iinclude",
+      "-c",
+      "src/main.c",
+      "-o",
+      "obj/main.o"
+    ],
+    "directory": "/home/Vatsal/Codes/C/Projects/Shell/vshell",
+    "output": "obj/main.o"
+  },
+  {
+    "file": "src/parser.c",
+    "arguments": [
+      "gcc",
+      "-g",
+      "-Iinclude",
+      "-c",
+      "src/parser.c",
+      "-o",
+      "obj/parser.o"
+    ],
+    "directory": "/home/Vatsal/Codes/C/Projects/Shell/vshell",
+    "output": "obj/parser.o"
+  },
+  {
+    "file": "src/shell.c",
+    "arguments": [
+      "gcc",
+      "-g",
+      "-Iinclude",
+      "-c",
+      "src/shell.c",
+      "-o",
+      "obj/shell.o"
+    ],
+    "directory": "/home/Vatsal/Codes/C/Projects/Shell/vshell",
+    "output": "obj/shell.o"
+  },
+  {
+    "file": "src/signals.c",
+    "arguments": [
+      "gcc",
+      "-g",
+      "-Iinclude",
+      "-c",
+      "src/signals.c",
+      "-o",
+      "obj/signals.o"
+    ],
+    "directory": "/home/Vatsal/Codes/C/Projects/Shell/vshell",
+    "output": "obj/signals.o"
+  },
+  {
+    "file": "src/utils.c",
+    "arguments": [
+      "gcc",
+      "-g",
+      "-Iinclude",
+      "-c",
+      "src/utils.c",
+      "-o",
+      "obj/utils.o"
+    ],
+    "directory": "/home/Vatsal/Codes/C/Projects/Shell/vshell",
+    "output": "obj/utils.o"
+  }
+]

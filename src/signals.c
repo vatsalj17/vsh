@@ -1,6 +1,7 @@
+#include "signals.h"
+
 #include <setjmp.h>
 #include <signal.h>
-#include "../include/signals.h"
 
 sigjmp_buf env;
 volatile sig_atomic_t jump_active = 0;

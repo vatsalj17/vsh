@@ -6,5 +6,6 @@ trash/
 Dockerfile
 install.sh
 hard_setup.sh
+.cache/
 **.o
 **.out

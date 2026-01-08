@@ -39,11 +39,11 @@ check_package_installed() {
 install_package_if_needed() {
 	local package="$1" system="$2" display="${3:-$package}"
 	if check_package_installed "$package" "$system"; then
-		echo "✅ $display is already installed"
+		echo "$display is already installed"
 		return
 	fi
 
-	echo "📦 Installing $display..."
+	echo "Installing $display..."
 	case "$system" in
 	macos) brew install "$package" ;;
 	arch) sudo pacman -S --needed "$package" ;;
@@ -58,13 +58,13 @@ install_package_if_needed() {
 	alpine) sudo apk add "$package" ;;
 	void) sudo xbps-install -y "$package" ;;
 	gentoo) sudo emerge "$package" ;;
-	*) echo "⚠️ Cannot install $display automatically on $system" && return 1 ;;
+	*) echo "Cannot install $display automatically on $system" && return 1 ;;
 	esac
 }
 
 check_essential_tools() {
 	local system="$1"
-	echo "🔍 Checking essential tools..."
+	echo "Checking essential tools..."
 
 	if ! command_exists make; then
 		case "$system" in
@@ -73,29 +73,29 @@ check_essential_tools() {
 		*) install_package_if_needed "make" "$system" ;;
 		esac
 	else
-		echo "✅ make is available"
+		echo "make is available"
 	fi
 
 	if ! command_exists gcc && ! command_exists clang; then
 		case "$system" in
-		macos) xcode-select --install 2>/dev/null || echo "⚠️ Xcode tools may already be installed" ;;
+		macos) xcode-select --install 2>/dev/null || echo "Xcode tools may already be installed" ;;
 		*) install_package_if_needed "gcc" "$system" ;;
 		esac
 	else
-		echo "✅ C compiler is available"
+		echo "C compiler is available"
 	fi
 }
 
 install_packages() {
 	local system="$1"
-	echo "🔍 Checking and installing dependencies for $system..."
+	echo "Checking and installing dependencies for $system..."
 	check_essential_tools "$system"
 
 	case "$system" in
 	macos)
 		command_exists brew || {
-			echo "❌ Install Homebrew first:"
-			echo "   /bin/bash -c \"\$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)\""
+			echo "Install Homebrew first:"
+			echo " /bin/bash -c \"\$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)\""
 			exit 1
 		}
 		install_package_if_needed "readline" "$system"
@@ -120,7 +120,7 @@ install_packages() {
 
 	rhel | centos)
 		rpm -q epel-release >/dev/null 2>&1 || {
-			echo "📦 Installing EPEL..."
+			echo "Installing EPEL..."
 			command_exists dnf && sudo dnf install -y epel-release || sudo yum install -y epel-release
 		}
 		install_package_if_needed "gcc" "$system"
@@ -152,13 +152,13 @@ install_packages() {
 		;;
 
 	nixos)
-		echo "⚠️ NixOS detected. Use nix-shell or system config:"
+		echo "ixOS detected. Use nix-shell or system config:"
 		echo "   nix-shell -p gcc gnumake readline"
 		exit 1
 		;;
 
 	*)
-		echo "⚠️ Unknown system: $system"
+		echo "Unknown system: $system"
 		echo "Please install:"
 		echo "  - gcc or clang"
 		echo "  - make"
@@ -169,7 +169,7 @@ install_packages() {
 
 build_shell() {
 	if ! [ -f "Makefile" ] && ! [ -f "makefile" ]; then
-		echo "❌ No Makefile found"
+		echo "No Makefile found"
 		exit 1
 	fi
 
@@ -178,29 +178,29 @@ build_shell() {
 	make
 
 	if ! [ -f "$SHELL_NAME" ]; then
-		echo "❌ Build failed"
+		echo "Build failed"
 		exit 1
 	fi
-	echo "✅ Build successful!"
+	echo "Build successful!"
 }
 
 install_binary() {
 	[ -f "$SHELL_NAME" ] || {
-		echo "❌ Binary not found"
+		echo "Binary not found"
 		exit 1
 	}
 
-	echo "📦 Installing $SHELL_NAME to $INSTALL_DIR..."
+	echo "Installing $SHELL_NAME to $INSTALL_DIR..."
 	sudo mkdir -p "$INSTALL_DIR"
 	sudo cp "$SHELL_NAME" "$INSTALL_DIR/"
 	sudo chmod +x "$INSTALL_DIR/$SHELL_NAME"
 }
 
 main() {
-	echo "🐚 Vatsal's Shell Installer"
+	echo "Vatsal's Shell Installer"
 	echo "==========================="
 	system=$(detect_system)
-	echo "📦 Detected: $system"
+	echo "Detected: $system"
 	echo ""
 	install_packages "$system"
 	echo ""
@@ -208,7 +208,7 @@ main() {
 	echo ""
 	install_binary
 	echo ""
-	echo "🎉 Done!"
+	echo "Done!"
 }
 
 main "$@"
