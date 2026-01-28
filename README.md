@@ -105,7 +105,9 @@ vsh          # If installed system-wide
 
 You'll see a colorized prompt in the format:
 ```
-username@hostname:[current_directory]⊱
+
+username@hostname - current_directory took time status_code
+⊱
 ```
 
 ### Built-in Commands

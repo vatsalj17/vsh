@@ -6,11 +6,21 @@
 #include <stdlib.h>
 #include <string.h>
 #include <sys/wait.h>
+#include <sys/resource.h>
 #include <unistd.h>
 
 #include "builtins.h"
 #include "parser.h"
 
+static double report_times(struct rusage *usage) {
+    long user_sec = usage->ru_utime.tv_sec;
+    long user_usec = usage->ru_utime.tv_usec;
+    long sys_sec = usage->ru_stime.tv_sec;
+    long sys_usec = usage->ru_stime.tv_usec;
+    double total_time = (double)user_sec + (double)user_usec / 10000.0 + (double)sys_sec + (double)sys_usec / 10000.0;
+    // printf("Total CPU time: %lf seconds\n", total_time);
+    return total_time;
+}
 void handle_redirections(char* input_file, char* output_file, char* append_file) {
 	if (output_file != NULL) {
 		int file = open(output_file, O_WRONLY | O_CREAT | O_TRUNC, 0644);  // Last arg is for permission
@@ -75,7 +85,7 @@ void exec_pipe(char*** new_cmds, int i, int n) {
 	}
 }
 
-void execute_command(char** command) {
+pid_t execute_command(char** command, double *time) {
 	int status;
 	pid_t child_pid;
 	char *output_file = NULL, *append_file = NULL, *input_file = NULL;
@@ -104,7 +114,7 @@ void execute_command(char** command) {
 			dup2(stdout_copy, STDOUT_FILENO);
 			close(stdin_copy);
 			close(stdout_copy);
-			return;
+			return 0;
 		}
 	}
 	child_pid = fork();
@@ -118,11 +128,17 @@ void execute_command(char** command) {
 			}
 			exec_pipe(parse_pipes(command), 0, pipe_counter(command) + 1);
 		} else {
-			if (execvp(command[0], command) < 0) perror("execvp");
+			// if (execvp(command[0], command) < 0) perror("execvp");
+			execvp(command[0], command);
 			fprintf(stderr, "vsh: Invalid Command\n");
-			exit(EXIT_FAILURE);
+			exit(127);
 		}
 	} else {
-		waitpid(child_pid, &status, WUNTRACED);
+        struct rusage usage;
+		wait4(child_pid, &status, WUNTRACED, &usage);
+        *time = report_times(&usage);
+        // printf("time: %lf", *time);
+        return WEXITSTATUS(status);
 	}
+    return 0;
 }
