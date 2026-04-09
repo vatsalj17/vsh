@@ -25,16 +25,16 @@ int main() {
 	jump_active = 1;
 	using_history();
 	read_history(vsh_history_path());
-    pid_t status = 0;
-    double time = 0;
+	pid_t status = 0;
+	double time = 0;
 	while (1) {
-        // printf("time: %lf", time);
+		// printf("time: %lf", time);
 		command = read_line(status, time);
 		if (command == NULL) {
 			continue;
 		}
 		status = execute_command(command, &time);
-        time *= 100;
+		time *= 100;
 
 		for (int i = 0; command[i] != NULL; i++) {
 			free(command[i]);

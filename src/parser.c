@@ -1,5 +1,6 @@
 #include "parser.h"
 
+#include <stdint.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -72,6 +73,15 @@ char** tokenize_input(char* input) {
 	}
 	tokens[index] = NULL;
 	return tokens;
+}
+
+bool to_run_bg(char** cmd) {
+    int i = 0;
+    while(cmd[i] != NULL) {
+        i++;
+    }
+    if (strcmp(cmd[i], "&") == 0) return true;
+    return false;
 }
 
 bool invalid_pipe_usage(char** cmd) {

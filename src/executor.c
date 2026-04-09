@@ -21,6 +21,7 @@ static double report_times(struct rusage *usage) {
     // printf("Total CPU time: %lf seconds\n", total_time);
     return total_time;
 }
+
 void handle_redirections(char* input_file, char* output_file, char* append_file) {
 	if (output_file != NULL) {
 		int file = open(output_file, O_WRONLY | O_CREAT | O_TRUNC, 0644);  // Last arg is for permission
@@ -128,7 +129,6 @@ pid_t execute_command(char** command, double *time) {
 			}
 			exec_pipe(parse_pipes(command), 0, pipe_counter(command) + 1);
 		} else {
-			// if (execvp(command[0], command) < 0) perror("execvp");
 			execvp(command[0], command);
 			fprintf(stderr, "vsh: Invalid Command\n");
 			exit(127);

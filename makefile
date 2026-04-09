@@ -1,7 +1,9 @@
 CC = gcc
 SRC = src
 INC = include
-CFLAGS = -lreadline -g -I$(INC)
+CFLAGS = -lreadline -I$(INC)
+# CFLAGS += -O3
+CFLAGS += -Wall -Wextra -pedantic -g
 OBJ = obj
 BIN = vsh
 BINDIR = /usr/local/bin
